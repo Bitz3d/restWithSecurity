@@ -18,45 +18,47 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private BCryptPasswordEncoder bcp;
-	
-	private DataSource ds;
-	
-	@Value("${spring.queries.user-query}")
-	private String userQuery;
-	
-	@Value("${spring.queries.role-query}")
-	private String roleQuery;
-	
-	
-	protected void configurer(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication().usersByUsernameQuery(userQuery)
-		.authoritiesByUsernameQuery(roleQuery)
-		.dataSource(ds).passwordEncoder(bcp);
-	}
-	
-	
-	protected void configurer(HttpSecurity httpSec) throws Exception{
-		httpSec.authorizeRequests()
-		.antMatchers("/").permitAll()
-		.antMatchers("/register").permitAll()
-		.antMatchers("/login").permitAll()
-		.antMatchers("/addUser").permitAll()
-		.anyRequest().authenticated()
-		.and().csrf().disable()
-		.formLogin()
-		.loginPage("/login")
-		.failureUrl("/login?error=true")
-		.defaultSuccessUrl("/").usernameParameter("email")
-		.passwordParameter("password")
-		.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.logoutSuccessUrl("/")
-		.and().exceptionHandling().accessDeniedPage("/denied");
-	}
-	
-	public void configure(WebSecurity webSec) throws Exception {
+    private BCryptPasswordEncoder bcp;
+
+    @Autowired
+    private DataSource ds;
+
+    @Value("${spring.queries.users-query}")
+    private String usersQuery;
+
+    @Value("${spring.queries.roles-query}")
+    private String rolesQuery;
+
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication().usersByUsernameQuery(usersQuery)
+                .authoritiesByUsernameQuery(rolesQuery)
+                .dataSource(ds).passwordEncoder(bcp);
+    }
+
+    protected void configure(HttpSecurity httpSec) throws Exception {
+        httpSec
+                .authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/index").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/adduser").permitAll()
+                .anyRequest().authenticated()
+                .and().csrf().disable()
+                .formLogin()
+                .loginPage("/login")
+                .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/", true).usernameParameter("email")
+                .passwordParameter("password")
+                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+                .and().exceptionHandling().accessDeniedPage("/denied");
+    }
+
+    public void configure(WebSecurity webSec) throws Exception {
         webSec.ignoring()
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/incl/**");
-	}
+    }
+
 	
 }
