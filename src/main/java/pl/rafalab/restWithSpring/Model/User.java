@@ -31,10 +31,13 @@ public class User {
 	private String password;
 	@NotNull
 	private String gender;
+	
 	@ManyToMany(cascade=CascadeType.ALL)
 	private Set<Role> roles;
+	
 	@NotNull
 	private String country;
+	
 	@NotNull
 	private Date birthDate;
 }
