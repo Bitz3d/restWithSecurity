@@ -3,6 +3,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,7 +12,7 @@
 </head>
 <body>
 <%@include file="/WEB-INF/incl/menu.app"%>
-	<h2><s:message code="menu.register"/></h2>
+	<h2 align="center"><s:message code="menu.register"/></h2>
 	<p align="center">
 		<c:out value="${message}"/>
 	</p>
@@ -23,8 +24,7 @@
 
         <tr>
             <td width="130" align="right" ><s:message code="register.name"/></td>
-            <td width="270" align="left"><sf:input path="name"
-                                                   size="28" id="name" /></td>
+            <td width="270" align="left"><sf:input path="name" size="28" id="name" /></td>
         </tr>
         <tr>
             <td colspan="2" align="center"><font color="red"><sf:errors path="name"/></font></td>
@@ -32,8 +32,7 @@
 
         <tr>
             <td width="130" align="right"><s:message code="register.lastName"/></td>
-            <td width="270" align="left"><sf:input path="lastName"
-                                                   size="28" /></td>
+            <td width="270" align="left"><sf:input path="lastName" size="28" id="lastName" /></td>
         </tr>
 
         <tr>
@@ -42,7 +41,7 @@
 
         <tr>
             <td width="130" align="right" ><s:message code="register.email"/></td>
-            <td width="270" align="left"><sf:input path="email" size="28" /></td>
+            <td width="270" align="left"><sf:input path="email" size="28" id="email" /></td>
         </tr>
         <tr>
             <td colspan="2" align="center"><font color="red"><sf:errors path="email"/></font></td>
@@ -50,7 +49,7 @@
 
         <tr>
             <td width="130" align="right" ><s:message code="register.password"/></td>
-            <td width="270" align="left"><sf:password path="password" size="28" /></td>
+            <td width="270" align="left"><sf:password path="password" size="28" id="password" /></td>
         </tr>
         <tr>
             <td colspan="2" align="center"><font color="red"><sf:errors path="password"/></font></td>
@@ -58,11 +57,46 @@
         
         <tr>
             <td width="130" align="right" ><s:message code="register.gender"/></td>
-            <td width="270" align="left"><sf:password path="gender" size="28" /></td>
+            <td width="270" align="left"><sf:radiobutton path="gender" value="M" class="gender" />Male 
+            							 <sf:radiobutton path="gender" value="F" class="gender" />Female
+           	</td>
         </tr>
         <tr>
             <td colspan="2" align="center"><font color="red"><sf:errors path="gender"/></font></td>
         </tr>
+        
+        <tr>
+            <td width="130" align="right" ><s:message code="register.country"/></td>
+            <td width="270" align="left"><sf:select path="country" id="country">
+            								<sf:option value="NONE" label="---Select---"/>
+            								<sf:options items="${countryList}" itemValue="id" itemLabel="country"/>
+            							</sf:select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><font color="red"><sf:errors path="country"/></font></td>
+        </tr>
+        
+       <tr>
+            <td width="130" align="right" ><s:message code="register.birthDate"/></td>
+            <td width="270" align="left"><input type="date" id="date"/>
+										
+        	</td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><font color="red"><sf:errors path="birthDate"/></font></td>
+        </tr>
+        
+         <tr>
+            <td width="130" align="right" ><s:message code="register.file"/></td>
+            <td width="270" align="left"><input type="file" id="file"/>
+										
+        	</td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><font color="red"><sf:errors path="fileUpload"/></font></td>
+        </tr>
+        
 
         <tr>
             <td colspan="2" align="center" bgcolor="#fff">
