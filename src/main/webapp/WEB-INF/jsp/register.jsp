@@ -8,10 +8,36 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script type="text/javascript">
+	window.onload = function () {
+		console.log('sdadasd')
+		var control = document.getElementById("myFile");
+		control.addEventListener("change", function (event) {
+			console.log('rafa')
+					       var i = 0,
+					           files = control.files,
+					           len = files.length,
+					           maxSize=500000;
+
+					       for (; i < len; i++) {
+
+					           if(files[i].size > maxSize){
+					               alert('Przekroczono dopuszczaly rozmiar pliku '+maxSize);
+					               this.value="";
+					           }else{
+					               console.log("Filename: " + files[i].name);
+					               console.log("Type: " + files[i].type);
+					               console.log("Size: " + files[i].size + " bytes");
+					               console.log(this.value);
+					           }
+					       }
+		               }, false);
+		            }
+	</script>
 <title><s:message code="menu.register"/></title>
 </head>
 <body>
-<%@include file="/WEB-INF/incl/menu.app"%>
+	<div id="menuTable"><%@include file="/WEB-INF/incl/menu.app"%></div>
 	<h2 align="center"><s:message code="menu.register"/></h2>
 	<p align="center">
 		<c:out value="${message}"/>
@@ -73,28 +99,29 @@
             							</sf:select>
             </td>
         </tr>
-        <tr>
+         <tr>
             <td colspan="2" align="center"><font color="red"><sf:errors path="country"/></font></td>
         </tr>
         
-       <tr>
-            <td width="130" align="right" ><s:message code="register.birthDate"/></td>
-            <td width="270" align="left"><input type="date" id="date"/>
-										
-        	</td>
-        </tr>
         <tr>
-            <td colspan="2" align="center"><font color="red"><sf:errors path="birthDate"/></font></td>
+            <td width="130" align="right" ><s:message code="register.role"/></td>
+            <td width="270" align="left"><sf:checkboxes items="${roleList }" itemValue="id" itemLabel="role" path="roles"/>
+            </td>
+        </tr>
+        
+        
+        <tr>
+            <td colspan="2" align="center"><font color="red"><sf:errors path="roles"/></font></td>
         </tr>
         
          <tr>
             <td width="130" align="right" ><s:message code="register.file"/></td>
-            <td width="270" align="left"><input type="file" id="file"/>
+            <td width="270" align="left"><input type="file" name="file" id="myFile"/>
 										
         	</td>
         </tr>
         <tr>
-            <td colspan="2" align="center"><font color="red"><sf:errors path="fileUpload"/></font></td>
+            <td colspan="2" align="center"><font color="red"><c:out value="${errorMessage}"/></font></td>
         </tr>
         
 
@@ -109,5 +136,6 @@
 		
 	
 	</sf:form>
+
 </body>
 </html>

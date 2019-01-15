@@ -1,6 +1,5 @@
 package pl.rafalab.restWithSpring.Model;
 
-import java.sql.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,11 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
@@ -25,8 +21,10 @@ public class User {
 	
 	@NotNull
 	private String name;
+
+	private int active;
 	
-	@NotEmpty(message="Pole nie może być puste")
+	@NotNull
 	private String email;
 	
 	@NotNull
@@ -44,13 +42,15 @@ public class User {
 	@NotNull
 	private String country;
 	
-	@NotNull
-	private Date birthDate;
-	
-	@OneToOne
-	private FileUpload fileUpload;
-
 	public User() {
+	}
+
+	public int getAvtive() {
+		return active;
+	}
+
+	public void setAvtive(int active) {
+		this.active = active;
 	}
 
 	public Long getId() {
@@ -117,20 +117,5 @@ public class User {
 		this.country = country;
 	}
 
-	public Date getBirthDate() {
-		return birthDate;
-	}
 
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
-	}
-
-	public FileUpload getFileUpload() {
-		return fileUpload;
-	}
-
-	public void setFileUpload(FileUpload fileUpload) {
-		this.fileUpload = fileUpload;
-	}
-	
 }
